@@ -3,13 +3,11 @@ import { Button, TextField } from "@mui/material";
 import { MultiStepContext } from "../StepContext";
 
 export const FirstStep = () => {
-  const { userData, setCurrentStep, handleChange } =
-    useContext(MultiStepContext);
-
+  const { userData, dispatch, handleChange } = useContext(MultiStepContext);
 
   const requiredFields = ["firstname", "lastname", "email", "phone"];
-  
-    const isFormIncomplete = () => {
+
+  const isFormIncomplete = () => {
     return requiredFields.some(
       (field) => !userData[field] || userData[field].toString().trim() === ""
     );
@@ -73,7 +71,7 @@ export const FirstStep = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => setCurrentStep(2)}
+        onClick={() => dispatch({ type: "set_step", payload: 2 })}
         disabled={isFormIncomplete()}
       >
         Next

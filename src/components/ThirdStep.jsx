@@ -3,16 +3,26 @@ import { Button, TextField } from "@mui/material";
 import { MultiStepContext } from "../StepContext";
 
 export const ThirdStep = () => {
-  const { setCurrentStep, userData, handleSubmit, handleChange, success } =
+  const { dispatch, userData, handleChange, success } =
     useContext(MultiStepContext);
 
-      const requiredFields = ["firstname", "lastname", "email", "phone", "reason","university", "course", "level", "cgpa_class" ];
-      
-        const isFormIncomplete = () => {
-        return requiredFields.some(
-          (field) => !userData[field] || userData[field].toString().trim() === ""
-        );
-      };
+  const requiredFields = [
+    "firstname",
+    "lastname",
+    "email",
+    "phone",
+    "reason",
+    "university",
+    "course",
+    "level",
+    "cgpa_class",
+  ];
+
+  const isFormIncomplete = () => {
+    return requiredFields.some(
+      (field) => !userData[field] || userData[field].toString().trim() === ""
+    );
+  };
   return (
     <>
       <div>
@@ -36,7 +46,7 @@ export const ThirdStep = () => {
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => setCurrentStep(2)}
+        onClick={() => dispatch({ type: "prev_step", payload: "2" })}
       >
         Back
       </Button>
@@ -44,7 +54,7 @@ export const ThirdStep = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => handleSubmit()}
+        onClick={() => dispatch({ type: "submit" })}
         disabled={isFormIncomplete()}
       >
         Submit
@@ -53,7 +63,10 @@ export const ThirdStep = () => {
       {success && (
         <p style={{ textAlign: "center" }}>
           Submitted successfully,{" "}
-          <a href="#" onClick={() => setCurrentStep(1)}>
+          <a
+            href="#"
+            onClick={() => dispatch({ type: "set_step", payload: "1" })}
+          >
             submit another response
           </a>
         </p>

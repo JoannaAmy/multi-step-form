@@ -3,8 +3,7 @@ import { Button, TextField, MenuItem } from "@mui/material";
 import { MultiStepContext } from "../StepContext";
 
 export const SecondStep = () => {
-  const { setCurrentStep, userData, handleChange } =
-    useContext(MultiStepContext);
+  const { dispatch, userData, handleChange } = useContext(MultiStepContext);
 
   const cgpaClasses = [
     { value: "first_class", label: "First Class" },
@@ -22,14 +21,13 @@ export const SecondStep = () => {
     { value: "500_level", label: "500 Level" },
   ];
 
-    const requiredFields = [ "university", "course", "level", "cgpa_class"];
-    
-      const isFormIncomplete = () => {
-      return requiredFields.some(
-        (field) => !userData[field] || userData[field].toString().trim() === ""
-      );
-    };
+  const requiredFields = ["university", "course", "level", "cgpa_class"];
 
+  const isFormIncomplete = () => {
+    return requiredFields.some(
+      (field) => !userData[field] || userData[field].toString().trim() === ""
+    );
+  };
 
   return (
     <>
@@ -102,14 +100,14 @@ export const SecondStep = () => {
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => setCurrentStep(1)}
+        onClick={() => dispatch({ type: "prev_step", payload: 1 })}
       >
         Back
       </Button>
       <Button
         variant="contained"
         color="primary"
-        onClick={() => setCurrentStep(3)}
+        onClick={() => dispatch({ type: "next_step", payload: 2 })}
         disabled={isFormIncomplete()}
       >
         Next
